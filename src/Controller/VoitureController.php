@@ -41,13 +41,13 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route("/admin/commande/edit/{id}", name:"edit_commande")]
+
     #[Route('/show/formCommande/{id}', name: 'form_commande')]
-    public function formCommande(EntityManagerInterface $manager, Request $request,Vehicule $vehicule = null, Security $security): Response 
+    public function formCommande(EntityManagerInterface $manager, Request $request,Vehicule $vehicule = null): Response 
     {
         if ($vehicule == null) 
         {
-            return $this->redirectToRoute('vehicules');
+            return $this->redirectToRoute('vehicule');
         }
 
         $commande = new Commande();
@@ -77,8 +77,8 @@ class VoitureController extends AbstractController
     }
 
     return $this->render('voiture/commandeGestion.html.twig', [
-        'vehicule' => $vehicule,
         'commandeForm' => $form->createView(),
+        'vehicule' => $vehicule
     ]);
     }
 
@@ -103,7 +103,7 @@ class VoitureController extends AbstractController
         $colonnes = $manager->getClassMetadata(Commande::class)->getFieldNames();
 
         $commandes = $repo->findAll();
-        return $this->render('admin/gestionCommande.html.twig', [
+        return $this->render('admin/gestionCommandes.html.twig', [
             "colonnes" => $colonnes,
             "commandes" => $commandes
         ]);

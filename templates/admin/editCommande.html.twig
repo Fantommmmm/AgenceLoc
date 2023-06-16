@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer la commande{% endblock %}
+
+{% block body %}
+    <h1>Éditer la commande</h1>
+
+    {{ form_start(editForm) }}
+        {{ form_row(editForm.date_heure_depart) }}
+        {{ form_row(editForm.date_heure_fin) }}
+        {{ form_row(editForm.prix_total) }}
+        {{ form_row(editForm.vehicule.marque) }}
+        <button type="submit" class="btn btn-warning">Enregistrer</button>
+    {{ form_end(editForm) }}
+{% endblock %}

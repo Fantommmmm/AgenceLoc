@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Membre;
+use App\Entity\Commande;
 use App\Entity\Vehicule;
 use App\Form\MembreType;
 use App\Form\VoitureType;
+use App\Form\EditCommandeType;
 use App\Repository\MembreRepository;
 use App\Repository\VehiculeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -140,5 +142,119 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('gestion_membre');
 
     }
+
+//     #[Route("/admin/commande/edit/{id}", name:"edit_commande")]
+//     public function formCommande(EntityManagerInterface $manager, Request $request,Vehicule $vehicule = null): Response 
+//     {
+//         if ($vehicule == null) 
+//         {
+//             return $this->redirectToRoute('vehicule');
+//         }
+
+//         $commande = new Commande();
+//         $membre = $this->getUser();
+
+//     $form = $this->createForm(CommandeType::class, $commande);
+//     $form->handleRequest($request);
+
+//     if ($form->isSubmitted() && $form->isValid()) {
+//         $dateDebut = $commande->getDateHeureDepart();
+//         $dateFin = $commande->getDateHeureFin();
+//         $nombreJours = $dateFin->diff($dateDebut)->days;
+
+//         $prixJournalier = $vehicule->getPrixJournalier();
+//         $prixTotal = $prixJournalier * $nombreJours;
+
+//         $commande
+//             ->setDateEnregistrement(new \DateTime)
+//             ->setPrixTotal($prixTotal)
+//             ->setVehicule($vehicule)
+//             ->setMembre($membre);
+
+//         $manager->persist($commande);
+//         $manager->flush();
+
+//         return $this->redirectToRoute('gestion_commandes');
+//     }
+
+//     return $this->render('voiture/commandeGestion.html.twig', [
+//         "editMode" => $commande->getId() !== null,
+//         'commandeForm' => $form->createView(),
+//         'vehicule' => $vehicule,
+//     ]);
+//     }
+
+
+
+// #[Route("/admin/commande/edit/{id}", name: "edit_commande")]
+// public function editCommande(Request $request, EntityManagerInterface $manager, Commande $commande, Vehicule $vehicule = null)
+// {
+//     $form = $this->createForm(EditCommandeType::class, $commande);
+//     $form->handleRequest($request);
+
+//     if ($form->isSubmitted() && $form->isValid()) {
+
+//         $commande
+//             ->setDateEnregistrement(new \DateTime)
+
+//             ->setVehicule($vehicule)
+
+
+//         $manager->persist($commande);
+//         $manager->flush();
+
+//         return $this->redirectToRoute('gestion_commandes');
+//     }
+
+//     return $this->render('admin/editCommande.html.twig', [
+//         'editForm' => $form->createView(),
+//         'commande' => $commande,
+//         'vehicule' => $vehicule->getId() !== null
+//     ]);
+// }
+
+
+
+
+#[Route('/admin/editCommande/{id}', name: 'edit_commande_admin')]
+public function editCommande(EntityManagerInterface $manager, Request $request, Commande $commande, VehiculeRepository $vehiculeRepository): Response
+{
+    $vehicule = $vehiculeRepository->find($commande->getVehicule()->getId());
+
+    $form = $this->createForm(EditCommandeType::class, $commande);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $dateDebut = $commande->getDateHeureDepart();
+        $dateFin = $commande->getDateHeureFin();
+        $nombreJours = $dateFin->diff($dateDebut)->days;
+
+        $prixJournalier = $vehicule->getPrixJournalier();
+        $prixTotal = $prixJournalier * $nombreJours;
+
+        $commande
+            ->setDateEnregistrement(new \DateTime())
+            ->setPrixTotal($prixTotal)
+            ->setVehicule($vehicule);
+
+        $manager->flush();
+
+        return $this->redirectToRoute('gestion_commandes', ['id' => $commande->getVehicule()->getId()]);
+
+    }
+
+    return $this->render('admin/editCommande.html.twig', [
+        'editForm' => $form->createView(),
+        'vehicule' => $vehicule,
+    ]);
+}
+
+
+
+
+
+
+   
+
 }
 

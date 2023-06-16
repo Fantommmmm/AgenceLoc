@@ -6,14 +6,14 @@
     <h1>Gestion des commandes</h1>
 
     {{ form_start(commandeForm) }}
-    <div>
+    <div class="container text-center">
         {{ form_label(commandeForm.date_heure_depart) }}
         {{ form_widget(commandeForm.date_heure_depart) }}
-    </div>
-    <div>
+    
         {{ form_label(commandeForm.date_heure_fin) }}
         {{ form_widget(commandeForm.date_heure_fin) }}
+        <button type="submit" class="btn btn-warning mt-4" >Valider</button>
     </div>
-    <button type="submit" class="btn">Valider</button>
+    
     {{ form_end(commandeForm) }}
 {% endblock %}
