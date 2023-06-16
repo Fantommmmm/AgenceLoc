@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Roles{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-4">Modifier Membre</h1>
+
+        <h3>{{ user.nom }}</h3>
+        <h3>{{ user.prenom }}</h3>
+
+    {{ form_errors(membreForm) }}
+    {{ form_start(membreForm) }}
+
+        {# {{ form_row(membreForm.roles, {
+            label: 'Role'
+        }) }} #}
+
+
+        
+    {{ form_end(membreForm) }}
+    <button type="submit" class="btn btn-dark">Modifier Role</button>
+</div>
+{% endblock %}

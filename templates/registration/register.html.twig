@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    {% if ediTMode %}
+        <br><h1 class="text-center">Modifier</h1>
+    {% else %}
+        <br><h1 class="text-center">S'inscrire</h1>
+    {% endif %}
+<div class="container">
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm, {
+            attr: {
+                novalidate: "novalidate"
+            }
+        }) }}
+        {{form_row(registrationForm.pseudo, {
+            label: "Pseudo:",
+            attr: {
+                placeholder:"pseudo"
+            }
+        })}}
+        {{form_row(registrationForm.nom, {
+            label: "Nom:",
+            attr: {
+                placeholder:"nom"
+            }
+        })}}
+        {{form_row(registrationForm.prenom, {
+            label: "Prenom:",
+            attr: {
+                placeholder:"prenom"
+            }
+        })}}
+        {{form_row(registrationForm.email, {
+            label: "Email:",
+            attr: {
+                placeholder:"email"
+            }
+        })}}
+        {{form_row(registrationForm.civilite)}}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {# {{ form_row(registrationForm.agreeTerms) }} #}
+    
+
+            
+
+    {% if ediTMode %}
+        <div class="text-center"><button type="submit" class="btn btn-warning mt-2 border">Modifier</button></div>
+    {% else %}
+        <div class="text-center"><button type="submit" class="btn btn-warning mt-2 border">S'inscrire</button></div>    
+    {% endif %}
+
+    {{ form_end(registrationForm) }}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+		

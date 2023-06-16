@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Voiture
+{% endblock %}
+
+
+{% block body %}
+
+	<section class="row article">
+
+
+		<article class="col-md-6 mx-auto  bg-dark text-dark border border-dark mb-3 p-3 mt-3 mr-1">
+			<h2 class="text-light">{{vehicule.titre}}</h2>
+			<div class="metadata text-light">Ecrit le
+				{{vehicule.dateEnregistrement|date('d/m/Y à H:i:s')}}
+			</div>
+			<div class="container">
+				<img class="img-fluid" src="{{vehicule.photo}}" alt="">
+				<div class="py-3  text-light " style="text-align: justify;">{{ vehicule.description}}</div>
+				<h5 class="text-light">{{ vehicule.prixJournalier }} €</h5>
+			</div>
+		{% if app.user %} {% if is_granted('ROLE_ADMIN') %}
+		
+			<a href="{{ path('edit_vehicule', {id: vehicule.id})}}" class="btn btn-warning">modifier</a>
+		{% endif %}{% endif %}
+
+			<a href="{{ path('form_commande', {'id': vehicule.id}) }}" class="btn btn-primary">Gérer la commande</a>
+
+		</article>
+
+	</section>
+
+
+{% endblock %}

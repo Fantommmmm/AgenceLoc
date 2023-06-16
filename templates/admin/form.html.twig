@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Ajouter Voiture{% endblock %}
+
+{% block body %}
+
+{% if editMode %}
+	    <h1 class="text-center my-3">Modifier Voiture</h1>
+    {% else %}
+	    <h1 class="text-center my-3">Ajouter Voiture</h1>
+{% endif %}
+
+
+<div class="container">
+    
+        {{ form_start(form, {
+        attr: {
+            novalidate: 'novalidate'
+        }
+    })}}
+	{{ form_row(form.titre, {
+        label: 'Titre'
+    }) }}
+	{{ form_row(form.marque, {
+        label: 'Marque'
+    }) }}
+	{{ form_row(form.modele, {
+        label: 'Modele'
+    }) }}
+	{{ form_row(form.description, {
+        label: 'Description',
+        attr: {
+            placeholder: "Description de la voiture"
+        }
+    }) }}
+
+	{{ form_row(form.photo) }}
+    {{ form_row(form.prix_journalier, {
+        label: 'Prix Journalier'
+    }) }}
+
+{% if editMode %}
+    <button type="submit"  class="btn btn-secondary">Modifier</button>
+    {% else %}
+    <button type="submit"  class="btn btn-secondary">Ajouter</button>    
+{% endif %}
+
+	{{ form_end(form)}}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Gestion des Commandes{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center my-4">Gestion des Commandes</h1>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Membre</th>
+                    <th>Véhicule</th>
+                    <th>Date et heure de départ</th>
+                    <th>Date et heure de fin</th>
+                    <th>Prix total</th>
+                    <th>Date et heure d'enregistrement</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.id }}</td>
+                        <td>{{ commande.membre.nom }}</td>
+                        <td>{{ commande.vehicule.titre }}</td>
+                        <td>{{ commande.dateHeureDepart|date('d/m/Y à H:i:s') }}</td>
+                        <td>{{ commande.dateHeureFin|date('d/m/Y à H:i:s') }}</td>
+                        <td>{{ commande.prixTotal }} €</td>
+                        <td>{{ commande.dateEnregistrement|date('d/m/Y à H:i:s') }}</td>
+                        <td>
+                            <a href="{{ path('edit_commande', {id: commande.id})}}" class="text-warning"><i class="fas fa-edit"></i></a>
+                            <a href="{{ path('delete_commande', {id: commande.id})}}" class="text-danger"><i class="fas fa-trash"></i></a>  
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
