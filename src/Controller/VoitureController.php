@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VoitureController extends AbstractController
 {
-    #[Route('/vehicules', name: 'vehicules')]
+    #[Route('/', name: 'vehicules')]
     public function index(VehiculeRepository $repo): Response
     {
         $vehicule = $repo->findBy([],['date_enregistrement' => "DESC"]);
