@@ -3,22 +3,19 @@
 {% block title %}Modifier Roles{% endblock %}
 
 {% block body %}
-<div class="container">
+
     <h1 class="text-center mt-4">Modifier Membre</h1>
+<div class="container text-center d-flex justify-content-center bg-dark col-1 rounded-2 text-light my-3">
+      {{form_start(form, {
+        attr: {
+        novalidate: 'novalidate'
+        }
+        })}}
+        {{ form_row(form.Roles) }}
 
-        <h3>{{ user.nom }}</h3>
-        <h3>{{ user.prenom }}</h3>
-
-    {{ form_errors(membreForm) }}
-    {{ form_start(membreForm) }}
-
-        {# {{ form_row(membreForm.roles, {
-            label: 'Role'
-        }) }} #}
-
-
-        
-    {{ form_end(membreForm) }}
-    <button type="submit" class="btn btn-dark">Modifier Role</button>
+<button type="submit" class="btn btn-light mb-3">modifier</button>
 </div>
+{{form_end(form)}}
+
+    
 {% endblock %}

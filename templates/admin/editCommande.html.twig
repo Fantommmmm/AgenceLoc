@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Éditer la commande{% endblock %}
+{% block title %}Modification des Commandes ADMIN{% endblock %}
 
 {% block body %}
-    <h1>Éditer la commande</h1>
+    <div class="container text-center my-2"><h1>Modifier la commande</h1></div>
 
-    {{ form_start(editForm) }}
-        {{ form_row(editForm.date_heure_depart) }}
-        {{ form_row(editForm.date_heure_fin) }}
-        {{ form_row(editForm.prix_total) }}
-        {{ form_row(editForm.vehicule.marque) }}
+    <div class="container">
+        {{ form_start(commandeForm) }}
+        {{ form_row(commandeForm.date_heure_depart) }}
+        {{ form_row(commandeForm.date_heure_fin) }}
+        {{ form_row(commandeForm.prix_total) }}
         <button type="submit" class="btn btn-warning">Enregistrer</button>
-    {{ form_end(editForm) }}
+    {{ form_end(commandeForm) }}
+    </div>
 {% endblock %}

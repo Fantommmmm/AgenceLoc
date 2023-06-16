@@ -33,7 +33,7 @@ class VoitureController extends AbstractController
     {
         if($vehicule == null)
         {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('vehicules');
         }
 
         return $this->render('voiture/voirVehicule.html.twig', [
@@ -42,12 +42,12 @@ class VoitureController extends AbstractController
     }
 
 
-    #[Route('/show/formCommande/{id}', name: 'form_commande')]
+    #[Route('/commande/new/{id}', name: 'form_commande')]
     public function formCommande(EntityManagerInterface $manager, Request $request,Vehicule $vehicule = null): Response 
     {
         if ($vehicule == null) 
         {
-            return $this->redirectToRoute('vehicule');
+            return $this->redirectToRoute('voir_vehicule');
         }
 
         $commande = new Commande();
@@ -76,11 +76,53 @@ class VoitureController extends AbstractController
         return $this->redirectToRoute('gestion_commandes');
     }
 
-    return $this->render('voiture/commandeGestion.html.twig', [
+    return $this->render('voiture/commandeAJouter.html.twig', [
         'commandeForm' => $form->createView(),
         'vehicule' => $vehicule
     ]);
     }
+
+
+
+    #[Route('/commande/edit/{id}', name: 'edit_commande')]
+public function formCommandeEdit(EntityManagerInterface $manager, Request $request, Commande $commande = null): Response 
+{
+    if ($commande == null) 
+    {
+        return $this->redirectToRoute('vehicules');
+    }
+
+    $membre = $this->getUser();
+
+    $form = $this->createForm(CommandeType::class, $commande);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $dateDebut = $commande->getDateHeureDepart();
+        $dateFin = $commande->getDateHeureFin();
+        $nombreJours = $dateFin->diff($dateDebut)->days;
+
+        $prixJournalier = $commande->getVehicule()->getPrixJournalier();
+        $prixTotal = $prixJournalier * $nombreJours;
+
+        $commande
+            ->setDateEnregistrement(new \DateTime)
+            ->setPrixTotal($prixTotal)
+            ->setMembre($membre);
+
+        $manager->persist($commande);
+        $manager->flush();
+
+        return $this->redirectToRoute('gestion_commandes');
+    }
+
+    return $this->render('voiture/commandeAjouter.html.twig', [
+        'commandeForm' => $form->createView(),
+        'editForm' => $commande->getId() !== null,
+        'vehicule' => $commande->getVehicule()
+    ]);
+}
+
 
 
     
@@ -97,17 +139,7 @@ class VoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/gestion/commande', name: "gestion_commandes_admin")]
-    public function gestionCommandesAdmin(CommandeRepository $repo , EntityManagerInterface $manager)
-    {
-        $colonnes = $manager->getClassMetadata(Commande::class)->getFieldNames();
-
-        $commandes = $repo->findAll();
-        return $this->render('admin/gestionCommandes.html.twig', [
-            "colonnes" => $colonnes,
-            "commandes" => $commandes
-        ]);
-    }
+    
 
     #[Route('/admin/commande/delete/{id}', name: 'delete_commande')]
     public function deleteCommande(Commande $commande, EntityManagerInterface $entityManager): Response

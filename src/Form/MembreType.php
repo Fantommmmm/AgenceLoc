@@ -13,15 +13,15 @@ class MembreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('roles', ChoiceType::class, [
-            //     'label' => 'Role:',
-            //     'choices' => [
-            //         'Admin' => 1,
-            //         'User' => 2,
-            //     ],
-
-            // ])
-        ;
+        ->add('Roles', ChoiceType::class, [
+            'required' => true,
+            'multiple' => true,
+            'expanded' => true,
+            'choices'  => [
+              'User' => 'ROLE_USER',
+              'Admin' => 'ROLE_ADMIN',
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

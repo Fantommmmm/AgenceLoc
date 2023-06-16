@@ -3,7 +3,8 @@
 {% block title %}Gestion des commandes{% endblock %}
 
 {% block body %}
-    <h1>Gestion des commandes</h1>
+
+	<div class="container text-center my-3"><h1> Date de Début et de fin de Location</h1></div>  
 
     {{ form_start(commandeForm) }}
     <div class="container text-center">
@@ -12,7 +13,9 @@
     
         {{ form_label(commandeForm.date_heure_fin) }}
         {{ form_widget(commandeForm.date_heure_fin) }}
-        <button type="submit" class="btn btn-warning mt-4" >Valider</button>
+
+            <button type="submit" class="btn btn-warning mt-4" >Valider</button>
+
     </div>
     
     {{ form_end(commandeForm) }}

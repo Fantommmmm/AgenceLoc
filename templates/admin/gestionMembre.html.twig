@@ -36,16 +36,11 @@
 							<td>{{ item.prenom }}</td>
 							<td>{{ item.email }}</td>
 							<td>{{ item.civilite }}</td>
-							{% if item.roles == 1 %}
-                            <td class="text-center">Admin</td>
-                            {% elseif item.roles == 2 %}
-                            <td class="text-center">Utilisateur</td>
-                            {% endif %}
 							<td>{{ item.dateEnregistrement|date('d/m/Y') }}</td>
 
 							<td>
 
-								<a href="{{ path('edit_membre', {id: item.id}) }}" class="text-warning">
+								<a href="{{ path('admin_membre_edit', {id: item.id}) }}" class="text-warning">
 									<i class="bi bi-person-gear pe-1"></i>
 								</a>
 								<a href="{{ path('membre_supprimer', {id: item.id}) }}" class="text-danger">
