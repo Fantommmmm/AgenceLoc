@@ -76,7 +76,7 @@ class VoitureController extends AbstractController
         return $this->redirectToRoute('gestion_commandes');
     }
 
-    return $this->render('voiture/commandeAJouter.html.twig', [
+    return $this->render('voiture/commandeTest.html.twig', [
         'commandeForm' => $form->createView(),
         'vehicule' => $vehicule
     ]);
